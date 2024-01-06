@@ -27,8 +27,8 @@ npm run dev
 
 - [Next.js를 선택한 이유](#Next.js를-선택한-이유)
 - [Tailwind CSS를 선택한 이유](#Tailwind-CSS를-선택한-이유)
-- [Recoil](#Recoil)
-- [DB 추가적 사용]
+- [Zustand를 사용하는 이유](#Zustand를-사용하는-이유)
+- [Supabase를 선택한 이유](#Supabase를-선택한-이유)
 
 ### Next.js를 선택한 이유
 
@@ -51,6 +51,11 @@ npm run dev
 
 아래와 같은 이유로 `Styled-components`와 `Tailwind CSS`를 생각 하였으나 Styled-components는 javascript에서 실행되어 런타임이 길어지는 것과 소규모 프로젝트이므로 **Tailwind CSS**를 선택하였습니다.
 
+- 동적인 스타일
+- 컴포넌트 기반
+- 성능 부분
+- 학습 곡선(SCSS 경우)
+
 |CSS|장점|단점|
 |:---:|:---:|:---:|
 |CSS Module|로컬 스코프<br>명명 충돌 방지<br>커스텀 스타일링|재사용성 제한<br>모듈 번들러 추가적 설정<br>전역 스타일 적용을 위한 별도 방식 필요|
@@ -58,14 +63,19 @@ npm run dev
 |Styled-components|컴포넌트 기반<br>동적 스타일링<br>SSR 지원|추가적 번들 크기<br>런타임 성능|
 |Tailwind CSS|커스트마이징 용이<br>빌드 시 최적화|클래스명 과다<br>스타일 커스마이징 한계|
 
-- 동적인 스타일
-- 컴포넌트 기반
-- 성능 부분
-- 학습 곡선
+### Zustand를 선택한 이유
 
-### Recoil?? Zustand??
+**Recoil** vs **Zustand**
 
-### supabase??
+가벼운 전역상태관리 라이브러리로 두 가지의 상태 라이브러리를 골랐으며  
+`Recoil`은 아직 버전(0.7.7)로 실험적 단계여서 자체가 간결하고 직관적인 **Zustand를 선택하였습니다** 
+
+|status|버전|장점|
+|:---:|:---:|:---:|
+|Recoil|`0.7.7`|Facebook에서 개발<br>Hooks 패턴과 잘 통합<br>세밀한 상태 관리 가능|
+|Zuustand|`4.4.7`|미니멀한 상태관리<br>구독기반이 아닌 훅을 사용|
+
+### Supabase를 선택한 이유
 
 ## 문제 해결 방법
 
