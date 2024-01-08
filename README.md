@@ -130,6 +130,15 @@ npm run dev
 
 ## 프론트엔드 설계
 
+- [화면 흐름도](#화면-흐름도)
+- [화면 UI](#화면-ui)
+
 ### 화면 흐름도
 
 <img width="650" alt="frontend flowchat image" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/216d29bd-4948-4918-9ee3-4d905af492cf">
+
+### 화면 UI
+
+**색상(Light & Dark)**
+
+## API 및 데이터베이스 설계
