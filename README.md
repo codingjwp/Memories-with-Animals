@@ -13,23 +13,19 @@ npm run dev
 
 ## 목차
 
-- [개발 환경](#개발-환경)
-- [기술 스택](#기술-스택)
-- [문제 해결 방법](#문제-해결-방법)
+- [개발 환경 및 기술 스택](#개발-환경-및-기술-스택)
 - [브랜치 전략](#브랜치-전략)
+- [프론트엔드 설계](#프론트엔드-설계)
 
-## 개발 환경
+## 개발 환경 및 기술 스택
 
-1. Window 11 64bit WSL2(Ubuntu 22.04.03)
-2. MacOs
-3. Node.js
-
-## 기술 스택
-
+운영체제 : `Window 11 64bit WSL2(Ubuntu 22.04.03)` or `MacOs`
+ 
 - [Next.js를 선택한 이유](#nextjs를-선택한-이유)
 - [Tailwind CSS를 선택한 이유](#tailwind-css를-선택한-이유)
 - [Zustand를 사용하는 이유](#zustand를-선택한-이유)
 - [Supabase를 선택한 이유](#supabase를-선택한-이유)
+- [문제 해결 방법](#문제-해결-방법)
 
 ### Next.js를 선택한 이유
 
@@ -118,7 +114,7 @@ npm run dev
 
 [supabase with prisma](https://supabase.com/partners/integrations/prisma)
 
-## 문제 해결 방법
+### 문제 해결 방법
 
 
 [설치방법](https://www.youtube.com/watch?v=BgifvZIRPPA)
@@ -132,3 +128,6 @@ npm run dev
   - ex ) `feat/login`, `feat/button` 등
 - `bugfix`: 버그 관련 내용이 모이는 브랜치
 
+## 프론트엔드 설계
+
+### 화면 흐름도
