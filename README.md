@@ -141,8 +141,10 @@ npm run dev
 
 **테마 색상(Light & Dark)**
 
-|테마 색상(Light & Dark|모바일|
+|테마 색상(Light & Dark|모바일 UI|
 |:---:|:---:|
-|<img width="300" alt="ThemaColor" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/a0d8468a-9ca6-45ac-b962-28b080d3d2ca">|아직|
+|<img width="300" alt="ThemaColor" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/e5eaa0bd-091b-4ffa-96e1-bad19ef2d480">|<img width="600" alt="mobile_ui" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/b83b22fa-b2a1-42ea-a593-6542c0cb78fd">|
+
+
 
 ## API 및 데이터베이스 설계
