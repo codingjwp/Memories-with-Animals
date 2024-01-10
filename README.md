@@ -80,6 +80,23 @@ npm run dev
 해당 부분에 대해서는 서로 지원하는 부분을 보긴했지만 데이터베이스를 보고 결정하기도 하였습니다.  
 **Supabase와 prisma를 선택하였습니다.**
 
+|Supabase Free|
+|:---|
+|프로젝트 2개로 제한|
+|무제한 API 요청|
+|소셜 OAuth 제공업체|
+|최대 500MB 데이터베이스 공간|
+|최대 1GB 파일 저장 공간|
+|최대 5GB 대역폭|
+|최대 50MB 파일 업로드|
+|월간 활성 사용자 최대 50,000명|
+|최대 500K Edge 함수 호출|
+|최대 200개의 동시 실시간 연결|
+|최대 200만 개의 실시간 메시지|
+|1일 로그 보관|
+|커뮤니티 지원|
+
+
 |DB|장점|
 |:---:|:---|
 |RDBMS(관계형)|고정 스키마<br>SQL<br>수직적 확장<br>ACID 속성 지원<br>복잡한 조인 지원<br>쓰기 읽기 성능 안정적 하지만 큰 데이터에서는 제한적|
@@ -112,7 +129,7 @@ npm run dev
 |typeORM|다양한 SQL 데이터베이스 지원<br>데코레이터를 사용한 직관적인 모델 정의<br>TypeScript와의 깊은 통합|
 |prisma|강력하고 타입 안전한 쿼리 빌더<br>자동 생성되는 마이그레이션 파일<br>직관적인 데이터 모델링 도구|
 
-[supabase with prisma](https://supabase.com/partners/integrations/prisma)
+> [supabase with prisma](https://supabase.com/partners/integrations/prisma)
 
 ### 문제 해결 방법
 
