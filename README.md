@@ -14,6 +14,7 @@ npm run dev
 ## 목차
 
 - [개발 환경 및 기술 스택](#개발-환경-및-기술-스택)
+- [설치](#설치)
 - [브랜치 전략](#브랜치-전략)
 - [프론트엔드 설계](#프론트엔드-설계)
 
@@ -25,7 +26,6 @@ npm run dev
 - [Tailwind CSS를 선택한 이유](#tailwind-css를-선택한-이유)
 - [Zustand를 사용하는 이유](#zustand를-선택한-이유)
 - [Supabase를 선택한 이유](#supabase를-선택한-이유)
-- [문제 해결 방법](#문제-해결-방법)
 
 ### Next.js를 선택한 이유
 
@@ -130,6 +130,53 @@ npm run dev
 |prisma|강력하고 타입 안전한 쿼리 빌더<br>자동 생성되는 마이그레이션 파일<br>직관적인 데이터 모델링 도구|
 
 > [supabase with prisma](https://supabase.com/partners/integrations/prisma)
+
+## 설치
+
+- [Nextjs + Supabase + Prisma](#nextjs--supabase--prisma)
+- [문제 해결 방법](#문제-해결-방법)
+
+### Nextjs + Supabase + Prisma
+
+**Next.js + typescript + Supabase설정**
+
+`.env` 설정 `https://supabase.com/dashboard/project/[project_url]/settings/api` 접속
+
+- API 메뉴 -> API Settings -> Project URL -> URL 링크(SUPABASE_URL)  
+- API 메뉴 -> API Settings -> Project API keys -> anon public(SUPABASE_ANON_KEY)  
+
+> [nextjs quickstarts](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs)
+
+```bash
+# 기본적인 설치
+npx create-next-app@latest . --ts -e with-supabase
+# .env
+SUPABASE_URL=your-project-url
+SUPABASE_ANON_KEY=your-anon-key
+```
+
+**Prisma 설정**
+
+`.env` 설정 `https://supabase.com/dashboard/project/[project_url]/settings/database` 접속
+
+- Database 메뉴 -> Connection string -> Nodejs 탭 -> 링크 copy(DIRECT_URL)
+- Database 메뉴 -> Connection Pooling -> Connection string -> 링크 copy(DATABASE_URL)
+
+### Connection pooling(연결 폴링)
+
+데이터베이스의 연결을 매번 새롭게 만들기 보다는 이미 생성된 연결을 **재사용**하는 것이 효율적이며  
+연결 풀링은 데이터베이스 연결을 미리 만들어 놓고 필요할때 마다 제공하며 사용이 끝난 연결은  
+다시 풀에 반환되어 재사용됩니다.
+
+> [supabase + prisma](https://supabase.com/partners/integrations/prisma)
+
+```bash
+# prisma 설치
+yarn add -D prisma
+# .env
+DIRECT_URL="postgresql://postgres:[data-password]@db.[your-project-ref].supabase.co:5432/postgres"
+DATABASE_URL="postgres://postgres.[your-project-ref]:[data-password]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1"
+```
 
 ### 문제 해결 방법
 
