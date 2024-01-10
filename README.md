@@ -135,16 +135,43 @@ npm run dev
 
 ### 화면 흐름도
 
+1차적으로 이미지 생성 이후 추가 될 수 있습니다.
+
 <img width="650" alt="frontend flowchat image" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/216d29bd-4948-4918-9ee3-4d905af492cf">
 
 ### 화면 UI
 
+해당 이미지 이후 수정 될 수 있습니다.
+
 **테마 색상(Light & Dark)**
 
-|테마 색상(Light & Dark|모바일 UI|
+|테마 색상(Light & Dark)|모바일 UI(Light & Dark)|
 |:---:|:---:|
 |<img width="300" alt="ThemaColor" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/e5eaa0bd-091b-4ffa-96e1-bad19ef2d480">|<img width="600" alt="mobile_ui" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/b83b22fa-b2a1-42ea-a593-6542c0cb78fd">|
 
-
-
 ## API 및 데이터베이스 설계
+
+데이터베이스 및 API 엔드포인트는 추가 및 수정 될 수 있습니다.
+
+데이터 베이스 테이블 이름
+- LOGINS_INFO : 로그인 정보
+  - UUID : 사용자 UUID 정보 (유니크)
+  - ACCESS_TOKEN : 에세스 토큰
+  - REFRESH_TOKEN : 리플레시 토큰
+  - ACCESS_TIME : 에세스 시간
+  - REFRESH_TIME : 리플레시 시간
+- USERS_INFO : 사용자 정보
+  - UUID : 사용자 UUID 정보(유니크)
+  - EMAIL : 사용자 이메일 정보
+  - PASSWORD : 사용자 패스워드(암호화)
+  - COUNTRY : 국가
+  - NICKNAME : 닉네임
+  - USERNAME : 핸들(유니크)
+  - CREATE_TIME : 생성일자
+  - AVATA: 이미지 파일주소
+  - 글내용
+- FLLOWS_INFO :  팔로우들 정보
+  - UUID : 사용자 UUID 정보(유니크)
+  - FLLOWS_UUID : 팔로우들 UUID 정보
+- POSTS_INFO: 게시글들 정보
+- COMMENTS_INFO: 게시글의 댓글들 정보
