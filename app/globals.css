@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --web-page-bgcolor: #F5F5DC;
+    --base-dark-color: #654321;
+    --base-light-color: #D2893F;
+    --special-dark-color: #6DC35C;
+    --special-light-color: #69DF81;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --web-page-bgcolor: #2F4F4F;
+      --base-dark-color: #20B2AA;
+      --base-light-color: #57FAC3;
+      --special-dark-color: #5793FA;
+      --special-light-color: #5760FA;
+    }
+  }
+}

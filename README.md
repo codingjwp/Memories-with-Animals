@@ -17,6 +17,7 @@ npm run dev
 - [설치](#설치)
 - [브랜치 전략](#브랜치-전략)
 - [프론트엔드 설계](#프론트엔드-설계)
+- [프론트엔드 컴포넌트](#프론트엔드-컴포넌트)
 
 ## 개발 환경 및 기술 스택
 
@@ -239,3 +240,60 @@ DATABASE_URL="postgres://postgres.[your-project-ref]:[data-password]@aws-0-[REGI
   - FLLOWS_UUID : 팔로우들 UUID 정보
 - POSTS_INFO: 게시글들 정보
 - COMMENTS_INFO: 게시글의 댓글들 정보
+
+
+## 프론트엔드 컴포넌트
+
+### TailwindCss 사용시 몰라던 부분
+
+**@layer base를 쓰는 이유**
+
+프로젝트 기본 스타일을 설정하는데 사용합니다. 저는 기본적인 시스템으로 작동하는 `light`, `dark` 모드때 색상을 변경하기 위해 `:root`에 색상을 지정하였습니다.
+
+```css
+@layer base {
+  :root {
+   --web-page-bgcolor: #F5F5DC;
+   --base-dark-color: #654321;
+   --base-light-color: #D2893F;
+   --special-dark-color: #6DC35C;
+   --special-light-color: #69DF81;
+ }
+ @media (prefers-color-scheme: dark) {
+   :root {
+     --web-page-bgcolor: #2F4F4F;
+     --base-dark-color: #20B2AA;
+     --base-light-color: #57FAC3;
+     --special-dark-color: #5793FA;
+     --special-light-color: #5760FA;
+    }
+  }
+}
+```
+
+**tailwind.config.js에서 theme -> extend -> colors와 theme -> colors의 차이점**
+
+`extend`가 없이 사용되는 방법은 `tailwindCSS`의 기본 색상 팔레트를 완전히 덮어쓰고  
+`extend`를 사용한 방법은 새로운 색상을 추가하거나 기본 색상 팔레트도 덮어씌울 수 있습니다.
+
+```typescript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        pageBgcolor: 'var(--web-page-bgcolor)',
+        baseDarkColor: 'var(--base-dark-color)',
+        baseLightColor: 'var(--base-light-color)',
+        specialDarkColor: 'var(--special-dark-color)',
+        specialLightColor: 'var(--special-light-color)',
+      }
+    }
+  },
+  plugins: [],
+}
+```
