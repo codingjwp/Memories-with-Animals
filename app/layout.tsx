@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-pageColor">
-        <main className="">
+        <main className="mt-12">
           {children}
         </main>
       </body>
