@@ -1,9 +1,6 @@
-import Header from "@/components/header/Header";
-
-export default async function Index() {
+export default async function RootPage() {
   return (
-    <div className="">
-      <Header />
+    <div>
     </div>
   )
 }
