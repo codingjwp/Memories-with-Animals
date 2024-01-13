@@ -19,7 +19,7 @@ export default function ShowPassword({passwordRef}: ShowPwProps) {
   }
 
   return (
-    <Button type="button" onClick={ClickChangeVisibility}>
+    <Button type="button" onClick={ClickChangeVisibility} size="icon">
       <SvgCollection svgShapes={`${visible}`} svgFill="white" size={24} />
       <span className="sr-only">
         {visible === 'visibility' ? 'show password' : 'hide passworkd'}

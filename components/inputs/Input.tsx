@@ -20,8 +20,6 @@ export default function Input({label, inputType, onChange}: InputProps) {
         </div>
       )
 
-
-
   return (
     <section className="flex flex-col gap-1">
       {typeLabel}
