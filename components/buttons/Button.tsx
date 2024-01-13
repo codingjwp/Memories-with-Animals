@@ -24,7 +24,6 @@ export default function Button({
   children
 }: ButtonAttributes) { 
   const isDefaultStyle = customStyle === null;
-  
   return (
     <button className={cx( 
       {
@@ -37,7 +36,7 @@ export default function Button({
         'flex-col': textPos === 'vertical',
         [`bg-${btnColor}`]: true,
         [`text-${textColor}`]: true,
-        customStyle: !isDefaultStyle
+        [`${customStyle}`]: !isDefaultStyle
       })}
       onClick={onClick}>
       {children}

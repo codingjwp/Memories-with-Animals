@@ -20,3 +20,32 @@
     }
   }
 }
+
+@layer components {
+  .view_menu {
+    @apply w-12 h-full relative;
+  }
+  .view_menu::before,
+  .view_menu::after {
+    content: '';
+    @apply block absolute w-8 border-black will-change-transform -translate-x-1/2 transition-transform duration-200 ease-in;
+    top: 50%;
+    left: 50%;
+  }
+  .view_menu::before {
+    @apply h-4 -translate-y-1/2 border-y-[3px];
+  }
+  .view_menu::after {
+    @apply -translate-y-1/2 border-t-[3px];
+  }
+  .view_menu::before.close_menu,
+  .view_menu::after.close_menu {
+    @apply transition-transform duration-200 ease-in;
+  }
+  .view_menu::before.close_menu {
+    @apply border-b-0 h-0 will-change-transform origin-center rotate-45;
+  }
+  .view_menu::after.close_menu {
+    @apply will-change-transform origin-center -rotate-45;
+  }
+}
