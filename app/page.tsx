@@ -1,8 +1,9 @@
-import Input from "@/components/inputs/Input"
+import Header from "@/components/header/Header";
 
 export default async function Index() {
   return (
-    <div className="flex gap-2">
+    <div className="">
+      <Header />
     </div>
   )
 }
