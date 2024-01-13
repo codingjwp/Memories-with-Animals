@@ -1,7 +1,7 @@
 'use clinet'
 import Button from "../buttons/Button"
 import SvgCollection from "../svgs/SvgCollection"
-import { MouseEvent, useState } from "react"
+import { MouseEvent } from "react"
 
 type ShowPwProps = {
   visibleValue: 'visibility' | 'unvisibility',

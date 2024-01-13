@@ -37,6 +37,8 @@ export default function Input({label, inputType, onChange}: InputProps) {
         type={inputType === 'password' && showType ? 'text' : inputType} id={inputType} name={inputType}
         autoComplete={inputType === 'email' ? 'username' : 'curent-password'} 
         autoFocus={inputType === 'email' ? true : false}
+        aria-describedby={inputType === 'password' ? 'password-constraint' : undefined}
+        required
         onChange={onChange}
         />
     </section>
