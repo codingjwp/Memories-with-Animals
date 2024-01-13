@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useState } from "react";
 import ShowPassword from "./ShowPassword";
 
 type InputProps = {
@@ -10,13 +10,22 @@ type InputProps = {
 }
 
 export default function Input({label, inputType, onChange}: InputProps) {
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const [showType, setShowType] = useState(false);
+  
+  const ClickChangeVisibility = () => {
+      if (inputType === 'password') {
+        setShowType((prev) => !prev);
+      }
+  }
+
   const typeLabel = inputType === 'email' 
     ? <label htmlFor={inputType}>{label}</label>
     : (
         <div className="flex justify-between">
           <label htmlFor={inputType}>{label}</label>
-          <ShowPassword passwordRef={passwordRef} />
+          <ShowPassword
+            visibleValue={showType ? 'unvisibility' : 'visibility'}
+            onClick={ClickChangeVisibility}  />
         </div>
       )
 
@@ -24,9 +33,8 @@ export default function Input({label, inputType, onChange}: InputProps) {
     <section className="flex flex-col gap-1">
       {typeLabel}
       <input
-        ref={inputType === 'password' ? passwordRef : null} 
         className="w-[210px] h-10 rounded-2xl px-2"
-        type={inputType} id={inputType} name={inputType}
+        type={inputType === 'password' && showType ? 'text' : inputType} id={inputType} name={inputType}
         autoComplete={inputType === 'email' ? 'username' : 'curent-password'} 
         autoFocus={inputType === 'email' ? true : false}
         onChange={onChange}
