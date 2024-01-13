@@ -1,5 +1,6 @@
 import SvgCollection from "@/components/svgs/SvgCollection";
-import Link from 'next/link';
+import Link from "next/link";
+import Button from "@/components/buttons/Button";
 
 export default function Header(){
   return (
@@ -8,6 +9,9 @@ export default function Header(){
         <SvgCollection svgShapes="logo" size={32} />
         <span className="sr-only">Logo</span>
       </Link>
+      <Button type="button" btnColor="transparent" >
+        <span className="sr-only">Edit Profile, Sign out Menu</span>
+      </Button>
     </header>
   )
 }
