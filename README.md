@@ -18,6 +18,8 @@ npm run dev
 - [브랜치 전략](#브랜치-전략)
 - [프론트엔드 설계](#프론트엔드-설계)
 - [프론트엔드 컴포넌트](#프론트엔드-컴포넌트)
+- [데이터베이스와 Prisma](#데이터베이스와-prisma)
+- [데이터베이스 설계](#데이터베이스-설계)
 
 ## 개발 환경 및 기술 스택
 
@@ -214,34 +216,6 @@ DATABASE_URL="postgres://postgres.[your-project-ref]:[data-password]@aws-0-[REGI
 |:---:|:---:|
 |<img width="300" alt="ThemaColor" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/e5eaa0bd-091b-4ffa-96e1-bad19ef2d480">|<img width="600" alt="mobile_ui" src="https://github.com/codingjwp/Memories-with-Animals/assets/113403155/b83b22fa-b2a1-42ea-a593-6542c0cb78fd">|
 
-## API 및 데이터베이스 설계
-
-데이터베이스 및 API 엔드포인트는 추가 및 수정 될 수 있습니다.
-
-데이터 베이스 테이블 이름
-- LOGINS_INFO : 로그인 정보
-  - UUID : 사용자 UUID 정보 (유니크)
-  - ACCESS_TOKEN : 에세스 토큰
-  - REFRESH_TOKEN : 리플레시 토큰
-  - ACCESS_TIME : 에세스 시간
-  - REFRESH_TIME : 리플레시 시간
-- USERS_INFO : 사용자 정보
-  - UUID : 사용자 UUID 정보(유니크)
-  - EMAIL : 사용자 이메일 정보
-  - PASSWORD : 사용자 패스워드(암호화)
-  - COUNTRY : 국가
-  - NICKNAME : 닉네임
-  - USERNAME : 핸들(유니크)
-  - CREATE_TIME : 생성일자
-  - AVATA: 이미지 파일주소
-  - 글내용
-- FLLOWS_INFO :  팔로우들 정보
-  - UUID : 사용자 UUID 정보(유니크)
-  - FLLOWS_UUID : 팔로우들 UUID 정보
-- POSTS_INFO: 게시글들 정보
-- COMMENTS_INFO: 게시글의 댓글들 정보
-
-
 ## 프론트엔드 컴포넌트
 
 ### TailwindCss 사용시 몰라던 부분
@@ -297,3 +271,289 @@ module.exports = {
   plugins: [],
 }
 ```
+
+## 데이터베이스와 Prisma
+
+- [prisma 설치](#prisma-설치)
+- [Prisma 테이블 관련 내용](#prisma-테이블-관련-내용)
+- [관련 예시 코드](#관련-예시-코드)
+
+### prisma 설치
+
+- **Prisma CLI** : 데이터베이스 마이그레이션, 데이터 모델링, 스키마 관리 등 작업을 위해 사용합니다.
+- **Prisma Client** : 데이터베이스 접근 및 쿼리를 실행하기 위한 라이브러리 입니다.
+
+```bash
+# Prisma CLI 설치
+yarn add -D prisma
+# Prisma Client 라이브러리 설치
+yarn add @prisma/client
+```
+**Prisma 초기화**
+
+`.env` 파일과 prisma 디렉토리와 `schema.prisma` 파일이 생성 됩니다.
+
+```bash
+npx prisma init
+```
+
+**Data sources(데이터 소스)**
+
+Prisma가 데이터베이스를 연결하는 방법을 결정하는 `datasource` 블록으로 표시합니다.  
+Prisma 스키마에는 하나의 **Data sources**만 있을 수 있습니다.  
+하지만 [PrismaClient](https://www.prisma.io/docs/orm/reference/prisma-client-reference#programmatically-override-a-datasource-url)를 생성할 때 **Data sources URL**을 재정의 할 수 있습니다.
+
+```bash
+datasource db {
+  # sql 종류
+  provider = "postgresql"
+  # .env 파일에 적용된 데이터베이스 URL 변수를 적용
+  url      = env("DATABASE_URL")
+  # 연결 폴링 용 URL .env
+  directUrl = env("DIRECT_URL")
+}
+
+# prisma example
+# datasource db {
+#   provider = "postgresql"
+#   url      = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
+# }
+```
+
+**Generators**
+
+`generators` 블록은 하나이상을 가질 수 있습니다.  
+`generators`는 prisma 생성 명령을 실행할 때 생성되는 자산을 결정합니다.  
+현재는 `prisma-client-js`만 사용할 수 있습니다.
+- `previewFeatures` : 스키마 미리보기
+- `binaryTargets` : `prisma-client-js`에 대한 엔진 바이너리 타겟(예: `Ubuntu 18+`에 배포하는 경우 `debian-openssl-1.1.x`, 로컬에서 작업하는 경우 `native`).
+
+기본적으로 **binaryTargets**의 기본은 `native` 입니다.
+
+```bash
+# schema.prisma file
+generator client {
+  # 현재는 prisma-client-js만 사용할 수 있습니다.
+  provider = "prisma-client-js"
+}
+
+# prisma example
+# generator client {
+#   provider        = "prisma-client-js"
+#   previewFeatures = ["sample-preview-feature"]
+#   binaryTargets   = ["linux-musl"]
+# }
+```
+
+### Prisma 테이블 관련 내용
+
+데이터 모델 정의
+
+- 모델 간의 관계를 포함하여 여러 필드를 정의하는 모델
+- 열거형(커넥터가 열거형을 지원하는 경우)
+- 필드 및 모델의 동작을 변경하는 속성 및 함수
+
+> PostgerSQL 관계형 데이터베이스에서는 model은 table에 매핑 됩니다.  
+> MongoDB인 NoSql은 컬렉션에 매핑 됩니다.
+
+**스키마 모델 예시 필드**
+
+|Name|Type|Scalar vs Relation|Type modifier|Attributes|
+|:---:|:---:|:---:|:---:|:---|
+|id|Int|Scalar|-|@id and @default(autoincrement())|
+|email|String|Scalar|-|@unique|
+|name|String|Scalar|?|-|
+|role|Role|Scalar(enum)|-|@default(USER)|
+|posts|Post|Relation(Prisma-level field)|[]|-|
+|profile|Profile|Relation(Prisma-level field)|?|-|
+
+
+**모델 및 타입**  
+PostgreSQL 기준으로 매핑되는 필드 비교
+
+|Prisma 필드|PostgreSQL 필드|
+|:---|:---|
+|`String`|`text`|
+|`Boolean`|`boolean`|
+|`Int`|`integer`|
+|`Big Int`|`bigint`|
+|`Float`|`double prcision`|
+|`Decimal`|`decimal(65, 30)`|
+|`Date Time`|`timestamp(3)`|
+|`Json`|`jsonb`|
+|`Byte`|`bytea`|
+|`Unsupported`|prisma에서 지원하지 않는 유형 필드|
+|`[]`|필드를 목록으로 만듭니다. `?`선택 사항일 수 없습니다.<br>ex) `Post[]` : Post 모델과 1 : n 관계|
+|`?`|필드를 선택 사항으로 만듭니다<br>`Profile?` : Profile 모델과 1: 1 관계|
+
+> Prisma 필드를 데이터베이스에 맞는 native 필드로 `@da.Text` 같이 변경이 가능합니다.  
+> [native 필드](https://www.prisma.io/docs/orm/reference/prisma-schema-reference#model-field-scalar-types)
+
+**속성(데코레이터)**  
+필드에 제약(규칙)을 적용합니다.
+
+- 필드 속성 앞에 `@` 접두사 사용합니다. 
+- 블록 속성 앞에 `@@` 접두사 사용합니다.
+
+|속성|내용|
+|:---|:---|
+|`@id`|기본키 primary key|
+|`@default`|기본적으로 들어가는 값을 표시 합니다 `autoincrement()`경우 자동적 숫자 증가|
+|`@unique`|필드에서 유일한 값을 표시합니다.|
+|`@relation`|모델간의 관계를 나타냅니다.<br> - `user User @relation(fields: [userId], references: [id])`<br>&ensp;- `userId`필드가 **User**라는 모델에 있는 `id` 필드를 참조합니다.<br>userId는 외래키(foreign key) 입니다|
+|`@updateAt`|데이터베이스 업데이트 시 자동 날짜 갱신|
+
+**@@ 접두사를 사용한 예시**
+
+```typescript
+model User {  
+  firstName String  
+  lastName  String  
+  email     String  @unique  
+  isAdmin   Boolean @default(false)  
+  
+  @@id([firstName, lastName])  
+}  
+```
+
+### 관련 예시 코드
+
+**테이블 생성 예시 코드 입니다.**
+
+```typescript
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  role    Role     @default(USER)
+  posts   Post[]
+  profile Profile?
+}
+
+model Profile {
+  id     Int    @id @default(autoincrement())
+  bio    String
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
+
+model Post {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  title      String
+  published  Boolean    @default(false)
+  author     User       @relation(fields: [authorId], references: [id])
+  authorId   Int
+  categories Category[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+```
+
+**데이터 생성 예시 코드 입니다.**
+
+```typescript
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient({})
+
+// 비동기 async/await 사용이 필요합니다.
+async function main() {
+  // 생성 user, posts, and categories
+  const user = await prisma.user.create({
+    data: {
+      email: 'ariadne@prisma.io',
+      name: 'Ariadne',
+      posts: {
+        create: [
+          {
+            title: 'My first day at Prisma',
+            categories: {
+              create: {
+                name: 'Office',
+              },
+            },
+          },
+          {
+            title: 'How to connect to a SQLite database',
+            categories: {
+              create: [{ name: 'Databases' }, { name: 'Tutorials' }],
+            },
+          },
+        ],
+      },
+    },
+  })
+
+  // 리턴 user, and posts, and categories
+  const returnUser = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    include: {
+      posts: {
+        include: {
+          categories: true,
+        },
+      },
+    },
+  })
+}
+```
+
+## 데이터베이스 설계
+
+데이터베이스 및 API 엔드포인트는 추가 및 수정 될 수 있습니다.
+
+User : 사용자 정보
+
+- **id** String @id @default(uuid()) #user id
+- **email** String @unique  #user 이메일
+- **username** String @unique #user 유니크한 이름
+- **createdAt** DateTime @default(now()) #생성 날짜
+- **userAuth** Auth @relation(fields: [], references: [id]) #인증정보 관련 테이블
+
+Auth : 인증 정보
+
+- **id** String @id #인증 id
+- **password** String #패스워드
+- **accessToken** String @unique #access token 
+- **refreshToken** String @unique #refresh token
+- **tokenExpiry** DateTime #token 만료시간
+- **failedLoginAttempt** Int @defulat(0) #로그인 실패 정보
+- **lastLogin** DateTime @default(now()) #마지막 로그인 시간
+- **userInfo** User @relation(fields: [id], references: []) #사용자 정보 테이블
+
+데이터 베이스 테이블 이름
+- LOGINS_INFO : 로그인 정보
+  - UUID : 사용자 UUID 정보 (유니크)
+  - ACCESS_TOKEN : 에세스 토큰
+  - REFRESH_TOKEN : 리플레시 토큰
+  - ACCESS_TIME : 에세스 시간
+  - REFRESH_TIME : 리플레시 시간
+- USERS_INFO : 사용자 정보
+  - UUID : 사용자 UUID 정보(유니크)
+  - EMAIL : 사용자 이메일 정보
+  - PASSWORD : 사용자 패스워드(암호화)
+  - COUNTRY : 국가
+  - NICKNAME : 닉네임
+  - USERNAME : 핸들(유니크)
+  - CREATE_TIME : 생성일자
+  - AVATA: 이미지 파일주소
+  - 글내용
+- FLLOWS_INFO :  팔로우들 정보
+  - UUID : 사용자 UUID 정보(유니크)
+  - FLLOWS_UUID : 팔로우들 UUID 정보
+- POSTS_INFO: 게시글들 정보
+- COMMENTS_INFO: 게시글의 댓글들 정보
