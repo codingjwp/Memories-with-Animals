@@ -48,4 +48,7 @@
   .view_menu::after.close_menu {
     @apply will-change-transform origin-center -rotate-45;
   }
+  .accounts:focus-within label {
+    @apply text-baseLight
+  }
 }
