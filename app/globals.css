@@ -19,6 +19,9 @@
       --special-light-color: #5760FA;
     }
   }
+  .base_height {
+    height:  calc(100vh - 48px);
+  }
 }
 
 @layer components {

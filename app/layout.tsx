@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-pageColor">
-        <main className="mt-12">
+        <main className="mt-12 base_height">
           {children}
         </main>
       </body>
