@@ -1,72 +1,75 @@
 'use client';
 
-import { MouseEvent, ChangeEvent, useState } from "react";
-import ShowPassword from "./ShowPassword";
-import Link from "next/link";
-import cn from "classnames"
+import cn from 'classnames';
+import ShowPassword from './ShowPassword';
+import { MouseEvent, useState } from 'react';
 
-type InputProps = {
-  label: string,
-  page: 'login' | 'register',
-  inputType: 'email' | 'password',
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+type BaseInputProps = {
+  text: string;
+  hideText?: boolean;
+  required?: boolean;
+  type: 'email' | 'password';
+  hidePassword?: boolean;
+  addStyles?: string;
 }
 
-export default function Input({label, page, inputType, onChange}: InputProps) {
-  const conditions = {
-    "useType": inputType === 'email',
-    "usePage": page === 'login',
-  };
-  const [showType, setShowType] = useState(false);
-  
-  const ClickChangeVisibility = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();    
-    if (!conditions.useType) {
-      setShowType((prev) => !prev);
-    }
+export default function Input({
+  text, 
+  hideText = false, 
+  required = false, 
+  type, 
+  hidePassword = false,
+  addStyles
+}: BaseInputProps) {
+  const [visible, setVisible] = useState(false);
+  const isEmailType = type === 'email';
+  const handleClickVisibleChange = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setVisible((prev) => !prev);
   }
+  
+  const baseLabel = 
+    <label className={cn(
+      'text-slate-400', {
+      'after:content-["*"] after:text-red-600 after:font-semibold after:pl-1': required,
+      'sr-only after:content-none': hideText,
+      })} 
+      htmlFor={type}>
+      {text}
+    </label>
+  const showPasswordLabel = 
+    <div className='flex justify-between'>
+      {baseLabel}
+      <ShowPassword visibleValue={visible ? 'unvisibility' : 'visibility'} onClick={handleClickVisibleChange} />
+    </div>
 
-  const typeLabel = conditions.useType 
-    ? <label
-        className={cn({"after:content-['*'] after:pl-1 after:font-bold after:text-red-600": !conditions.usePage})}
-        htmlFor={inputType}>{label}</label>
-    : (
-        <div className="flex justify-between">
-          <label 
-            className={cn({"after:content-['*'] after:pl-1 after:font-bold after:text-red-600": !conditions.usePage})}
-            htmlFor={inputType}>{label}</label>
-          <ShowPassword
-            visibleValue={showType ? 'unvisibility' : 'visibility'}
-            onClick={ClickChangeVisibility}  />
-        </div>
-      )
-  const registerLink = (!conditions.useType && conditions.usePage)
-    ? <Link 
-        className={cn(
-          'w-full text-[12px] text-blue-800 text-end',
-          'hover:underline'
-        )}
-        href='/register'>회원가입</Link>
-    : null
+  // const 
+
 
   return (
-    <section className="flex flex-col gap-1">
-      {typeLabel}
+    <section className={cn(
+      'flex flex-col gap-[2px] accounts w-[270px]',
+      {[`${addStyles}`]: typeof addStyles === 'string' }
+    )}>
+      {!isEmailType && hidePassword ? showPasswordLabel : baseLabel}
       <input
         className={cn(
-          'w-[210px] h-10 rounded-2xl px-2',
-          {'mb-5': !conditions.usePage && !conditions.useType }
+          'w-full h-9 px-1',
+          'outline-none border-b-2 border-slate-400 bg-transparent',
+          'focus:border-baseLight',
+          'text-black dark:text-white',
         )}
-        type={!conditions.useType && showType ? 'text' : inputType}
-        id={inputType}
-        name={inputType}
-        autoComplete={conditions.useType ? 'username' : 'curent-password'} 
-        autoFocus={conditions.useType ? true : false}
-        aria-describedby={!conditions.useType ? 'password-constraint' : undefined}
+        type={!isEmailType && !visible ? `${type}` : 'text'}
+        id={type}
+        name={type}
+        autoFocus={isEmailType ? true : false}
+        autoComplete={isEmailType ? 'username' : 'curent-password'}
+        aria-describedby={isEmailType ? undefined : 'password-constraint'}
+        placeholder={hideText ? `${text}` : undefined}
         required
-        onChange={onChange}
-        />
-        {registerLink}
+        // onChange={}
+      />
+      {isEmailType ? null : <p className='text-black dark:text-white text-xs'>소문자, 대문자, 8자리 이상 입력해주세요.</p>}
     </section>
   )
 }
