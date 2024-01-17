@@ -27,7 +27,6 @@ ref: ForwardedRef<HTMLInputElement>
 ) {
   const [visible, setVisible] = useState(false);
   const isType = (content: string ) => type === content;
-  const isPasswordType = type === 'password';
   const handleClickVisibleChange = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setVisible((prev) => !prev);

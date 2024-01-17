@@ -1,4 +1,5 @@
 'use clinet'
+
 import Button from "../buttons/Button"
 import SvgCollection from "../svgs/SvgCollection"
 import { MouseEvent } from "react"
@@ -10,8 +11,8 @@ type ShowPwProps = {
 
 export default function ShowPassword({visibleValue, onClick}: ShowPwProps) {
   return (
-    <Button type="button" onClick={onClick} size="icon" btnColor="transparent" >
-      <SvgCollection svgShapes={`${visibleValue}`} svgFill="white" size={24} />
+    <Button type="button" onClick={onClick} size="icon" btnColor="transparent">
+      <SvgCollection svgShapes={`${visibleValue}`} size={24} />
       <span className="sr-only">
         {visibleValue === 'visibility' ? 'show password' : 'hide passworkd'}
       </span>
