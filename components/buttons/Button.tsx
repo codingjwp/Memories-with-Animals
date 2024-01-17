@@ -19,7 +19,8 @@ export default function Button({
   textPos='horizontal',
   customStyle = undefined,
   onClick,
-  children
+  children,
+  ...rest
 }: ButtonAttributes) { 
   const btnBgColor = `bg-${btnColor}`;
   return (
@@ -38,7 +39,8 @@ export default function Button({
         'bg-transparent': btnColor === 'transparent',
         [`${customStyle}`]: customStyle !== undefined
       })}
-      onClick={onClick}>
+      onClick={onClick}
+      {...rest}>
       {children}
     </button>
   )
