@@ -15,8 +15,8 @@
       --web-page-bgcolor: #2F4F4F;
       --base-dark-color: #20B2AA;
       --base-light-color: #57FAC3;
-      --special-dark-color: #5793FA;
-      --special-light-color: #5760FA;
+      --special-dark-color: #5760FA;
+      --special-light-color: #5793FA;
     }
   }
   .base_height {
@@ -52,6 +52,6 @@
     @apply will-change-transform origin-center -rotate-45;
   }
   .accounts:focus-within label {
-    @apply text-baseLight
+    @apply text-baseLight;
   }
 }
