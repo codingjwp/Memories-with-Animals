@@ -2,20 +2,20 @@ import cx from 'classnames';
 
 
 type SvgCollectionProps = {
-  svgShapes: 'logo'|'visibility'|'unvisibility'|'home'|'account'|'search'|'favorite'|'add'|'close'|'upload',
-  svgFill?: 'white' | 'black',
-  size?: number,
+  svgShapes: 'logo'|'visibility'|'unvisibility'|'home'|'account'|'search'|'favorite'|'add'|'close'|'upload'|'github'|'github-white';
+  size?: number;
+  customStyle?: string;
 }
 
 
-const SvgCollection = ({svgShapes, svgFill='black', size=24}: SvgCollectionProps) => {
+const SvgCollection = ({svgShapes, size=24, customStyle = undefined}: SvgCollectionProps) => {
   return (
-    <svg className={
-        cx({
-            'fill-black': svgShapes !== 'logo' && svgFill === 'black',
-            'fill-white': svgShapes !== 'logo' &&svgFill === 'white'
-          })
-      } width={size} height={size}>
+    <svg 
+      className={cx({
+        'fill-black dark:fill-white': svgShapes !== 'logo',
+        [`${customStyle}`]: customStyle !== undefined
+      })}
+      width={size} height={size}>
       <use href={`/sprites/InlineSprite.svg#${svgShapes}`} />
     </svg>
   )
