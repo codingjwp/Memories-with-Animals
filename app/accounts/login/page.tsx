@@ -1,13 +1,20 @@
 import LoginForm from "@/components/accounts/LoginForm"
-import { readUserSession } from '@/lib/actions/accoutAction'
-import { redirect } from 'next/navigation';
+import { signInAction, SignInResponse } from '@/lib/actions/singInAction';
+import { redirect } from "next/navigation";
 
 export default async function LoginPage() {
-  const { data } = await readUserSession();
-  
-  if (data.session) {
-    return redirect('/');
+
+  async function serverSignIn(formData: FormData) {
+    'use server'
+    const clickBtn = String(formData.get('action'));
+    const res = await signInAction(formData);
+    const data: SignInResponse = JSON.parse(res);
+    if (data.status === 400 || data.status === 500) {
+      console.error("로그인 에러 :", data.message);
+      return;
+    }
+    redirect(`/?type=${clickBtn}`);
   }
 
-  return (<LoginForm />)
+  return (<LoginForm serverAction={serverSignIn} />)
 }

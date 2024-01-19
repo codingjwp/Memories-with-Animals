@@ -27,7 +27,8 @@ export default function Button({
     <button className={cx( 
       'flex items-center justify-center transition-all duration-200 ease-in',
       {
-        'rounded-2xl gap-2 active:shadow-[inset_4px_4px_10px_rgba(0,0,0,0.6),inset_-4px_-4px_10px_rgba(255,255,255,0.6)]': size !== 'icon',
+        'rounded-2xl gap-2': size !== 'icon',
+        'hover:shadow-[inset_4px_4px_10px_rgba(0,0,0,0.6),inset_-4px_-4px_10px_rgba(255,255,255,0.6)]': size !== 'icon',
         'w-28 h-10': size === 'sm',
         'w-60 h-11': size === 'md',
         'w-full h-11': size === 'lr',

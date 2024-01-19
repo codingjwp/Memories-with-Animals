@@ -1,15 +1,21 @@
 import RegisterForm from "@/components/accounts/RegisterForm";
-import { readUserSession } from '@/lib/actions/accoutAction'
-import { redirect } from 'next/navigation';
+import { signUpAction, SignUpResponse } from '@/lib/actions/singUpAction';
+import { redirect } from "next/navigation";
 
 export default async function RegisterPage() {
-  const { data } = await readUserSession();
-  
-  if (data.session) {
-    return redirect('/');
+  async function serverSignUp(formData: FormData) {
+    'use server'
+    const res = await signUpAction(formData);
+    const data: SignUpResponse = JSON.parse(res);
+    if (data.status === 400 || data.status === 500) {
+      console.error("회원가입 에러 :", data.message);
+    } else if(data.status === 301) {
+      console.log("회원가입 성공:", data.message);
+      redirect('/');
+    }
   }
 
   return (
-    <RegisterForm />
+    <RegisterForm serverAction={serverSignUp} />
   )
 }
