@@ -8,7 +8,6 @@ export default function OauthGroups() {
   const handleClickConnectOauth = async (event: MouseEvent<HTMLButtonElement>) => {
     const types = event.currentTarget.value;
     const supabase = createSupabaseClient();
-    console.log("Test: ", location.origin);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: `${types}` as Provider,
       options: {
