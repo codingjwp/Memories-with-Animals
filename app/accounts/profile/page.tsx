@@ -1,5 +1,5 @@
+import ProfileForm from "@/components/accounts/ProfileForm";
+
 export default function ProfilePage() {
-  return (
-    <div>profile</div>
-  ) 
+  return (<ProfileForm />) 
 }

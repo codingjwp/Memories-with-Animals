@@ -3,7 +3,6 @@ import { signInAction, SignInResponse } from '@/lib/actions/singInAction';
 import { redirect } from "next/navigation";
 
 export default async function LoginPage() {
-
   async function serverSignIn(formData: FormData) {
     'use server'
     const clickBtn = String(formData.get('action'));
