@@ -32,6 +32,5 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}${next}`)
     }
   }
-  console.error("에러 발생");
   return NextResponse.redirect(`${origin}/auth/auth-code-error`)
 }
