@@ -12,8 +12,10 @@ export default function RegisterForm({serverAction}:RegisterFormProps) {
   return (
     <form action={serverAction}>
       <Input text="Email" type="email" required={true} addStyles="mb-4" />
-      <Input text="Password" type="password" hidePassword={true} required={true} addStyles="mb-5" />
-      <Input text="Confirm Password" type="confirm" hidePassword={false} required={true} addStyles="mb-5" />
+      <Input text="Password" type="password" hidePassword={true} required={true} addStyles="mb-5" 
+        description="소문자, 대문자, 8자리 이상 입력해주세요."/>
+      <Input text="Confirm Password" type="confirm" hidePassword={false} required={true} addStyles="mb-5" 
+        description="비밀번호를 재확인 해주요." />
       <Button id="register" type="submit" name="action" value="signup" btnColor="dark" size="lr" customStyle="mb-4">
         <span className="text-black dark:text-white">Sign Up</span>
       </Button>

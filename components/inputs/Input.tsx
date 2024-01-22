@@ -8,9 +8,10 @@ type BaseInputProps = {
   text: string;
   hideText?: boolean;
   required?: boolean;
-  type: 'email' | 'password' | 'confirm';
+  type: 'email' | 'password' | 'confirm' | 'text';
   hidePassword?: boolean;
   addStyles?: string;
+  description?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,6 +22,7 @@ function Input({
   type, 
   hidePassword = false,
   addStyles,
+  description,
   onChange
 }: BaseInputProps,
 ref: ForwardedRef<HTMLInputElement>
@@ -64,14 +66,13 @@ ref: ForwardedRef<HTMLInputElement>
         type={isType('password') && visible ? 'text' : (isType('confirm') ? 'password' : `${type}`)}
         id={type}
         name={type}
-        autoFocus={type === 'email' ? true : false}
-        autoComplete={type === 'email' ? 'username' : 'curent-password'}
+        autoFocus={isType('email') ? true : false}
+        autoComplete={isType('email') ? 'username' : (isType('password') ? 'curent-password' : undefined)}
         placeholder={hideText ? `${text}` : undefined}
         required
         onChange={onChange}
       />
-      {isType('password') ? <p className='text-black dark:text-white text-xs'>소문자, 대문자, 8자리 이상 입력해주세요.</p> : null}
-      {isType('confirm') ? <p className='text-black dark:text-white text-xs'>비밀번호를 재확인 해주요.</p> : null}
+      {description ? <p className='text-black dark:text-white text-xs'>{description}</p> : null}
     </section>
   )
 }
