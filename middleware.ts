@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   });
 
   const apiPath =  /\/api/.test(request.nextUrl.pathname);
-  const testPath =  /\/accounts\/profile/.test(request.nextUrl.pathname);
+  const testPath =  /\/accounts\/profile|\//.test(request.nextUrl.pathname);
   if (apiPath) return response;
   if (testPath) return response;
   
