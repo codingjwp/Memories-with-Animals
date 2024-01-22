@@ -1,21 +1,18 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
-}
-
 datasource db {
   provider = "postgresql"
   url = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model Species {
   species String @id
   krSpecies String
   breeds Breeds[]
+  profile Profile[]
 }
 
 model Breeds {
@@ -23,5 +20,15 @@ model Breeds {
   speciesId String
   breed String
   krBreed String
-  species Species @relation(fields: [speciesId], references: [species]) 
+  species Species @relation(fields: [speciesId], references: [species])
+}
+
+model Profile {
+  id String @id @default(uuid())
+  speciesId String
+  userId String
+  avatar String
+  nickname String
+  description String @db.Text
+  species Species @relation(fields: [speciesId], references: [species])
 }
