@@ -1,7 +1,7 @@
 'use client';
 
 import cn from 'classnames';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, ChangeEvent, SetStateAction, Dispatch } from 'react';
 
 type SpeciesData = {
   species: string;
@@ -10,33 +10,32 @@ type SpeciesData = {
 
 interface ISpeciesProps {
   content: string;
+  speciesPick: string;
+  setSpeciesPick : Dispatch<SetStateAction<string>>;
   data?: SpeciesData[];
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
-export default function SpeciesSelector({content, data}: ISpeciesProps) {
+export default function SpeciesSelector({content, speciesPick, setSpeciesPick, data, onChange}: ISpeciesProps) {
   const [open, setOpen] = useState(false);
-  const [picks, setPicks] = useState<string[]>([])
   const handleClickOpenToClose = () => setOpen(prev => !prev);
   const handleClickSelectPick = (event: MouseEvent) => {
     const pick = (event.target as HTMLLIElement);
     if (pick) {
-      setPicks([String(pick.dataset.value)]);
+      setSpeciesPick(String(pick.dataset.value));
       setOpen(prev => !prev);
     }
   }
 
   return (
     <div className="relative w-[270px] font-medium h-auto m-2">
-      <input type='hidden' name="species" value={picks.toString()}/>
+      <input type='hidden' name="species" value={speciesPick.toString()} onChange={onChange}/>
       <button type="button" className={cn(
         'flex items-center justify-between rounded bg-white w-full p-2 down_arrow',
         { 'after:rotate-180 ': open, 'after:rotate-0': !open }
         )}
         onClick={handleClickOpenToClose}>
-        {picks.length === 0 ? content : picks.map((pick) => {
-          const found = data?.find(item => item.species === pick);
-          return found ? found.krSpecies : ''
-        }).toString()}
+        {speciesPick === '' ? content : data?.find(item => item.species === speciesPick)?.krSpecies}
       </button>
       <ul className={cn(
           'absolute w-full z-20 bg-white mt-2 overflow-y-auto',

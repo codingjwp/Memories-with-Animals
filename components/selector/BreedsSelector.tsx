@@ -35,7 +35,7 @@ export default function BreedsSelector({content, data}: IBreedProps) {
 
   return (
     <div className="relative w-[270px] font-medium h-auto m-2">
-      <input type='hidden' name="breeds" value={picks.toString()} />
+      <input type='hidden' name="breeds" defaultValue={picks.toString()} />
       <button type='button' disabled={data?.length === 0 ? true : false} 
         className={cn(
           'flex items-center justify-between rounded bg-white w-full p-2 down_arrow',
